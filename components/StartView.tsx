@@ -3,10 +3,11 @@ import {Text, View, StyleSheet} from 'react-native';
 
 import {Button} from './Button'
 type StartView = {
-    startWalking(): void
+    startWalking(): void,
+    showRoutes(): void
 }
 
-export  const StartView : React.FC<StartView> = ({startWalking}) => {
+export  const StartView : React.FC<StartView> = ({startWalking, showRoutes}) => {
     const startNewWalk = () => {
         startWalking();
     }
@@ -25,6 +26,8 @@ export  const StartView : React.FC<StartView> = ({startWalking}) => {
         <View style={styles.startView}>
             <Text style={styles.text}>Прогуляемся?</Text>
             <Button title="Погнали" clickCallback={startWalking} />
+            <Text style={styles.text}>Прогулки</Text>
+            <Button title="Список" clickCallback={showRoutes} />
         </View>
     );
     

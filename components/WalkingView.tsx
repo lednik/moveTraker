@@ -1,12 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import MapView, { Polyline } from 'react-native-maps';
+import {View, StyleSheet} from 'react-native';
 import GetLocation from 'react-native-get-location'
 
 import {Button} from './Button'
+import {Map} from './Map'
+
 
 type WalkingView = {
-    stopWalking(): void
+    stopWalking(data : data): void
+}
+type data = {
+    coordinates : any[],
+    region : object,
+    date : string
 }
 
 export  const WalkingView : React.FC<WalkingView> = ({stopWalking}) => {
@@ -28,20 +34,24 @@ export  const WalkingView : React.FC<WalkingView> = ({stopWalking}) => {
         })
     }
     const stopWalkingFunc = () => {
-        stopWalking();
+        let date = new Date();
+        let dateString: string = date.getHours() + ' : ' + date.getMinutes();
+        let data : data = {
+            coordinates,
+            region,
+            date: dateString
+        }
+        stopWalking(data);
     }
     useEffect(() => {
         setTimeout(()=> {
             setCount(count + 1);
-            console.log(count);
         },5000)
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 5000,
         })
         .then(location => {
-            console.log(location.latitude);
-            console.log(location.longitude);
             setRegionFunc(location.longitude, location.latitude)
             setCoordinatesFunc(location.longitude, location.latitude)
         })
@@ -60,11 +70,6 @@ export  const WalkingView : React.FC<WalkingView> = ({stopWalking}) => {
             fontSize: 32,
             marginBottom: 24
         },
-        map: {
-            width: '100%', 
-            height: '100%', 
-            flex: 1
-        },
         button: {
             position: "absolute",
             bottom: 20,
@@ -81,13 +86,14 @@ export  const WalkingView : React.FC<WalkingView> = ({stopWalking}) => {
     });
     return (
         <View style={styles.walkingView}>
-            <MapView region={region}  style={styles.map}>
+            {/* <MapView region={region}  style={styles.map}>
                 <Polyline
                     coordinates={coordinates}
                     strokeColor="#A60000"
                     strokeWidth={2}
                 />
-            </MapView>
+            </MapView> */}
+            <Map region={region} coordinates={coordinates} />
             <View style={styles.button}>
                 <Button title="Пришли" clickCallback={stopWalkingFunc} />
             </View>
