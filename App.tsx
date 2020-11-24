@@ -1,27 +1,20 @@
 import React, {useState} from 'react';
-import {ScrollView, View, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import {StartView} from './components/StartView'
 import {WalkingView} from './components/WalkingView'
 import {RoutesView} from './components/RoutesView'
 import {RouteView} from './components/RouteView'
 
-type data = {
-  coordinates : any[],
-  region : object,
-  date : string
-}
-
 const App = () => {
   const [status, setStatus] = useState('startView');
-  const [routes, setRoutes] = useState<data[]>([]);
-  const [route, setRoute] = useState<data>();
+  const [route, setRoute] = useState<string>('');
+
   const startWalking = () => {
     setStatus('walkingView');
   }
-  const stopWalking = (data : data) => {
-    let newArray : data[] = [...routes, data]
-    setRoutes(newArray);
+  
+  const stopWalking = () => {
     setStatus('startView');
   }
 
@@ -33,8 +26,8 @@ const App = () => {
     setStatus('startView');
   }
 
-  const showRoute = (route : data) => {
-    setRoute(route)
+  const showRoute = (value : string) => {
+    setRoute(value);
     setStatus('routeView');
   }
 
@@ -51,6 +44,7 @@ const App = () => {
         marginBottom: 24
     }
   })
+
   return (
     <View style={styles.view}>
         {status == 'startView' &&
@@ -61,7 +55,7 @@ const App = () => {
           <WalkingView stopWalking={stopWalking} />
         }
         {status == 'routesView' &&
-          <RoutesView showRoute={showRoute} routes={routes} toStartView={toStartView} />
+          <RoutesView showRoute={showRoute} toStartView={toStartView} />
         }
         {status == 'routeView' &&
           <RouteView  route={route} toStartView={toStartView} />
@@ -69,7 +63,5 @@ const App = () => {
     </View>
   );
 };
-
-
 
 export default App;

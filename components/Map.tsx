@@ -30,5 +30,4 @@ export  const Map : React.FC<MapType> = ({region, coordinates}) => {
             />
         </MapView>
     );
-    
 };
