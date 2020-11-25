@@ -29,21 +29,7 @@ const App = () => {
     setRoute(value);
     setStatus('routeView');
   }
-
-  const styles = StyleSheet.create({
-    scrollView: {
-        backgroundColor: '#c5bbba',
-    },
-    view: {
-      flex: 1,
-      backgroundColor: '#c5bbba',
-    },
-    text: {
-        fontSize: 32,
-        marginBottom: 24
-    }
-  })
-
+  
   return (
     <View style={styles.view}>
         {status == 'startView' &&
@@ -62,5 +48,17 @@ const App = () => {
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  scrollView: {
+      backgroundColor: '#c5bbba',
+  },
+  view: {
+    flex: 1,
+    backgroundColor: '#EBF9F8',
+  },
+  text: {
+      fontSize: 32,
+      marginBottom: 24
+  }
+})
 export default App;

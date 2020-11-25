@@ -55,23 +55,25 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking}) => {
         createFile(data);
         stopWalking();
     }
-    useEffect(() => {
-        setTimeout(()=> {
-            setCount(count + 1);
-        },5000)
+    const getGeoData = () => {
+        console.log('getGeoData');
+        
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 5000,
         })
-        .then(location => {
-            setRegionFunc(location.longitude, location.latitude)
-            setCoordinatesFunc(location.longitude, location.latitude)
-        })
-        .catch(error => {
-            const { code, message } = error;
-            console.warn(code, message);
-        })
-    }, [count]);
+            .then(location => {
+                setRegionFunc(location.longitude, location.latitude)
+                setCoordinatesFunc(location.longitude, location.latitude)
+            })
+            .catch(error => {
+                const { code, message } = error;
+                console.warn(code, message);
+            })
+    }
+    useEffect(() => {
+        getGeoData();
+    }, [coordinates]);
     
     let [region, setRegion] = useState({
         latitude: 0,
