@@ -1,48 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text, ActivityIndicator} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob'
 import {data, _RouteView} from '../types/types'
 import {Button} from './Button'
 import {Map} from './Map'
 
-const fs = RNFetchBlob.fs
-
-// type data = {
-//     coordinates : any[],
-//     region : object,
-//     date : string
-// }
-
-// type RouteView = {
-//     route: string,
-//     toStartView(): void
-// }
-
 export  const RouteView : React.FC<_RouteView> = ({route, toStartView}) => {
-    let [routeData, setRoute] = useState<data>({
-        coordinates: [],
-        region: {},
-        date: ''
-    })
-    const styles = StyleSheet.create({
-        routeView: {
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
-        button: {
-            position: "absolute",
-            bottom: 20,
-            width: '100%',
-            height: 40,
-            alignItems: "center",
-            zIndex: 10
-        }
-    })
-
+    let [routeData, setRoute] = useState<data>()
     useEffect(() => {
-        console.log('route from route', route);
-        
+        // console.log('routeData from route', routeData);
         // ПУТИ
         let dirs = RNFetchBlob.fs.dirs 
         let dirPath = dirs.CacheDir + '/routes' //ПУТЬ ДО ПАПКИ С ФАЙЛАМИ
@@ -57,7 +23,11 @@ export  const RouteView : React.FC<_RouteView> = ({route, toStartView}) => {
 
     return (
         <View style={styles.routeView}>
-            <Map region={routeData.region} coordinates={routeData.coordinates} />
+            {routeData ? (
+                <Map region={routeData.region} coordinates={routeData.coordinates} />
+            ) : (
+                <ActivityIndicator size="large" color="#733651" />
+            )}
             <View style={styles.button}>
                 <Button title="Назад" clickCallback={toStartView} />
             </View>
@@ -65,3 +35,19 @@ export  const RouteView : React.FC<_RouteView> = ({route, toStartView}) => {
     );
     
 };
+const fs = RNFetchBlob.fs
+const styles = StyleSheet.create({
+    routeView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    button: {
+        position: "absolute",
+        bottom: 20,
+        width: '100%',
+        height: 40,
+        alignItems: "center",
+        zIndex: 10
+    }
+})

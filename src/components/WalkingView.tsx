@@ -2,28 +2,28 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import GetLocation from 'react-native-get-location'
 import RNFetchBlob from 'rn-fetch-blob'
-import {_WalkingView, data} from '../types/types'
+import {_WalkingView, data, Latlng} from '../types/types'
 import {Button} from './Button'
 import {Map} from './Map'
 
 export  const WalkingView : React.FC<_WalkingView> = ({stopWalking}) => {
     
     let [count, setCount] = useState(0)
-    let [coordinates, setCoordinates] = useState<object[]>([]);
+    let [coordinates, setCoordinates] = useState<Latlng[]>([]);
 
     const setCoordinatesFunc = (long: number, lat : number) => {
-        let newArray : object[] = [...coordinates, { latitude: lat, longitude: long}]
+        let newArray : Latlng[] = [...coordinates, { latitude: lat, longitude: long}]
         setCoordinates(newArray)
     }
     const setRegionFunc = (long: number, lat : number) => {
         setRegion({
             latitude: lat,
             longitude: long,
-            latitudeDelta: 0.000922,
-            longitudeDelta: 0.000421
+            latitudeDelta: 0.00922,
+            longitudeDelta: 0.00421
         })
     }
-    const stopWalkingFunc = () => {
+    const createData = () => {
         // ФОРМИРОВАНИЕ ДАННЫХ МАРШРУТА
         let date = new Date();
         let dateString: string = date.getHours() + ' : ' + date.getMinutes() + ' : ' + date.getMilliseconds();
@@ -32,21 +32,27 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking}) => {
             region,
             date: dateString
         }
-        let json = JSON.stringify(data)
-        // ПУТИ
-        const dirs = RNFetchBlob.fs.dirs 
+        return data;
+    }
+    const createFile = (data: data) => {
+        let dirs = RNFetchBlob.fs.dirs 
         let dirPath = dirs.CacheDir + '/routes' //ПУТЬ ДО ПАПКИ С ФАЙЛАМИ
         let path =  dirPath + '/' + data.date + '.json' //ПУТЬ ДО СОЗДАВАЕМОГО ФАЙЛА
+        let json = JSON.stringify(data) //ТЕЛО НОВОГО ДОКУМЕНТА
         // СОЗДАНИЕ ПАПКИ ПРИ ЕЕ ОТСУТСТВИИ
         RNFetchBlob.fs.mkdir(dirPath)
-        .then(()=>{ 
-            console.log('mkdir done');
-        })
+            .then(()=>{ 
+                console.log('mkdir done');
+            })
         // СОЗДАНИЕ ФАЙЛА
         RNFetchBlob.fs.createFile(path, json, 'utf8')
             .then(()=>{ 
                 console.log('create file done');
             })
+    } 
+    const stopWalkingFunc = () => {
+        let data = createData();
+        createFile(data);
         stopWalking();
     }
     useEffect(() => {
@@ -85,9 +91,7 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking}) => {
 const fs = RNFetchBlob.fs
 const styles = StyleSheet.create({
     walkingView: {
-        flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        flex: 1
     },
     text: {
         fontSize: 32,
