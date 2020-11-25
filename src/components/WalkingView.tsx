@@ -56,8 +56,6 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking}) => {
         stopWalking();
     }
     const getGeoData = () => {
-        console.log('getGeoData');
-        
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 5000,
