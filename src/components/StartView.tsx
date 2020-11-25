@@ -1,16 +1,13 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-
+import {_StartView} from '../types/types'
 import {Button} from './Button'
-type StartView = {
-    startWalking(): void,
-    showRoutes(): void
-}
+// type StartView = {
+//     startWalking(): void,
+//     showRoutes(): void
+// }
 
 export  const StartView : React.FC<StartView> = ({startWalking, showRoutes}) => {
-    const startNewWalk = () => {
-        startWalking();
-    }
     const styles = StyleSheet.create({
         startView: {
             flex: 1,

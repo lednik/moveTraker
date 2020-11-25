@@ -2,23 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import GetLocation from 'react-native-get-location'
 import RNFetchBlob from 'rn-fetch-blob'
-const fs = RNFetchBlob.fs
-
-
+import {_WalkingView, data} from '../types/types'
 import {Button} from './Button'
 import {Map} from './Map'
 
-
-type WalkingView = {
-    stopWalking(): void
-}
-type data = {
-    coordinates : any[],
-    region : object,
-    date : string
-}
-
-export  const WalkingView : React.FC<WalkingView> = ({stopWalking}) => {
+export  const WalkingView : React.FC<_WalkingView> = ({stopWalking}) => {
     
     let [count, setCount] = useState(0)
     let [coordinates, setCoordinates] = useState<object[]>([]);
@@ -26,14 +14,13 @@ export  const WalkingView : React.FC<WalkingView> = ({stopWalking}) => {
     const setCoordinatesFunc = (long: number, lat : number) => {
         let newArray : object[] = [...coordinates, { latitude: lat, longitude: long}]
         setCoordinates(newArray)
-        console.log('coordinates', coordinates);
     }
     const setRegionFunc = (long: number, lat : number) => {
         setRegion({
             latitude: lat,
             longitude: long,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            latitudeDelta: 0.000922,
+            longitudeDelta: 0.000421
         })
     }
     const stopWalkingFunc = () => {
@@ -79,44 +66,38 @@ export  const WalkingView : React.FC<WalkingView> = ({stopWalking}) => {
             console.warn(code, message);
         })
     }, [count]);
-    const styles = StyleSheet.create({
-        walkingView: {
-            flex: 1,
-            // alignItems: 'center',
-            // justifyContent: 'center',
-        },
-        text: {
-            fontSize: 32,
-            marginBottom: 24
-        },
-        button: {
-            position: "absolute",
-            bottom: 20,
-            width: '100%',
-            height: 40,
-            alignItems: "center"
-        }
-    })
+    
     let [region, setRegion] = useState({
         latitude: 0,
         longitude: 0,
-        latitudeDelta: 0.00022,
-        longitudeDelta: 0.00021,
+        latitudeDelta: 0.0022,
+        longitudeDelta: 0.0021,
     });
     return (
         <View style={styles.walkingView}>
-            {/* <MapView region={region}  style={styles.map}>
-                <Polyline
-                    coordinates={coordinates}
-                    strokeColor="#A60000"
-                    strokeWidth={2}
-                />
-            </MapView> */}
             <Map region={region} coordinates={coordinates} />
             <View style={styles.button}>
                 <Button title="Пришли" clickCallback={stopWalkingFunc} />
             </View>
         </View>
     );
-    
 };
+const fs = RNFetchBlob.fs
+const styles = StyleSheet.create({
+    walkingView: {
+        flex: 1,
+        // alignItems: 'center',
+        // justifyContent: 'center',
+    },
+    text: {
+        fontSize: 32,
+        marginBottom: 24
+    },
+    button: {
+        position: "absolute",
+        bottom: 20,
+        width: '100%',
+        height: 40,
+        alignItems: "center"
+    }
+})

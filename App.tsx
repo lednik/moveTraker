@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native'
-
-import {StartView} from './components/StartView'
-import {WalkingView} from './components/WalkingView'
-import {RoutesView} from './components/RoutesView'
-import {RouteView} from './components/RouteView'
+import {StartView} from './src/components/StartView'
+import {WalkingView} from './src/components/WalkingView'
+import {RoutesView} from './src/components/RoutesView'
+import {RouteView} from './src/components/RouteView'
 
 const App = () => {
   const [status, setStatus] = useState('startView');

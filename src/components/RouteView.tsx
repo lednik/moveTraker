@@ -1,24 +1,24 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob'
-
+import {data, _RouteView} from '../types/types'
 import {Button} from './Button'
 import {Map} from './Map'
 
 const fs = RNFetchBlob.fs
 
-type data = {
-    coordinates : any[],
-    region : object,
-    date : string
-}
+// type data = {
+//     coordinates : any[],
+//     region : object,
+//     date : string
+// }
 
-type RouteView = {
-    route: string,
-    toStartView(): void
-}
+// type RouteView = {
+//     route: string,
+//     toStartView(): void
+// }
 
-export  const RouteView : React.FC<RouteView> = ({route, toStartView}) => {
+export  const RouteView : React.FC<_RouteView> = ({route, toStartView}) => {
     let [routeData, setRoute] = useState<data>({
         coordinates: [],
         region: {},
