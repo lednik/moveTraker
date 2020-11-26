@@ -1,15 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import GetLocation from 'react-native-get-location'
-import {fs, dirPath} from '../params/path'
-import {_WalkingView, data, Latlng} from '../types/types'
-import {Button} from './Button'
-import {Map} from './Map'
+import {fs, dirPath} from '../../params/path'
+import {_WalkingView, data, Latlng} from '../../types/types'
+import {Button} from '../Button'
+import {Map} from '../Map'
+import {SaveRouteModal} from '../SaveRouteModal'
 
 
 export  const WalkingView : React.FC<_WalkingView> = ({stopWalking} : _WalkingView) => {
 
     let [coordinates, setCoordinates] = useState<Latlng[]>([]);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const setCoordinatesFunc = (long: number, lat : number) => {
         let newArray : Latlng[] = [...coordinates, { latitude: lat, longitude: long}]
@@ -34,8 +36,8 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking} : _WalkingVi
         }
         return data;
     }
-    const createFile = (data: data) => {
-        let path =  dirPath + '/' + data.date + '.json'
+    const createFile = (data: data, routeName : string | undefined) => {
+        let path =  dirPath + '/' + routeName + '.json'
         let json = JSON.stringify(data)
         fs.mkdir(dirPath)
             .then(()=>{ 
@@ -46,10 +48,13 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking} : _WalkingVi
             .then(()=>{ 
                 console.log('create file done');
             })
-    } 
-    const stopWalkingFunc = () => {
-        let data = createData();
-        createFile(data);
+    }
+    const stopWalkingFunc = (isSave : boolean, routeName?: string) => {
+        if (isSave) {
+            console.log('routeName',routeName);
+            let data = createData();
+            createFile(data, routeName);
+        }
         stopWalking();
     }
     const getGeoData = () => {
@@ -64,6 +69,7 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking} : _WalkingVi
             .catch(error => {
                 const { code, message } = error;
                 console.warn(code, message);
+                getGeoData();
             })
     }
     useEffect(() => {
@@ -80,8 +86,13 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking} : _WalkingVi
         <View style={styles.walkingView}>
             <Map region={region} coordinates={coordinates} />
             <View style={styles.button}>
-                <Button title="Пришли" clickCallback={stopWalkingFunc} />
+                <Button title="Пришли" clickCallback={() => setModalVisible(true)} />
             </View>
+            <SaveRouteModal 
+                createFunc={(value) => stopWalkingFunc(true, value)} 
+                cancelFunc={() => stopWalkingFunc(false)}
+                continueFunc={() => setModalVisible(false)}
+                modalVisible={modalVisible}/>
         </View>
     );
 };

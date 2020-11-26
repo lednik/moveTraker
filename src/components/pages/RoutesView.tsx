@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View,  FlatList, SafeAreaView, ActivityIndicator, Pressable, Image} from 'react-native';
-import {fs, dirPath} from '../params/path'
-import {RoutesType} from '../types/types'
-import {Button} from './Button'
+import {fs, dirPath} from '../../params/path'
+import {RoutesType} from '../../types/types'
+import {Button} from '../Button'
 
 export  const RoutesView : React.FC<RoutesType> = ({toStartView, showRoute} : RoutesType) => {
 
@@ -28,7 +28,7 @@ export  const RoutesView : React.FC<RoutesType> = ({toStartView, showRoute} : Ro
             <Pressable onPress={() => {deleteRoute(item)}} style={styles.delete}>
                 <Image
                     style={styles.deleteImage}
-                    source={require('../svg/trash.png')}
+                    source={require('../../svg/trash.png')}
                 />
             </Pressable>
         </View>

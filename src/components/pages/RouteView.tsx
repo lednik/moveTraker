@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
-import {data, _RouteView} from '../types/types'
-import {Button} from './Button'
-import {Map} from './Map'
-import {fs, dirPath} from '../params/path'
+import {data, _RouteView} from '../../types/types'
+import {Button} from '../Button'
+import {Map} from '../Map'
+import {fs, dirPath} from '../../params/path'
 
 export  const RouteView : React.FC<_RouteView> = ({route, toStartView} : _RouteView) => {
     let [routeData, setRoute] = useState<data>()

@@ -3,12 +3,13 @@ import {Text, StyleSheet, Pressable} from 'react-native';
 
 type Button = {
     title: string
-    clickCallback(): void
+    clickCallback(): void,
+    disabled? : boolean
 }
 
-export  const Button : React.FC<Button> = ({title, clickCallback} : Button) => {
+export  const Button : React.FC<Button> = ({title, clickCallback, disabled = false} : Button) => {
     return (
-        <Pressable onPress={clickCallback} style={styles.button}>
+        <Pressable disabled={disabled} onPress={clickCallback} style={styles.button}>
             <Text style={styles.text}>{title}</Text>
         </Pressable>
     );
