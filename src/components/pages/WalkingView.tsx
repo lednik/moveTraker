@@ -7,10 +7,9 @@ import {Button} from '../Button'
 import {Map} from '../Map'
 import {SaveRouteModal} from '../SaveRouteModal'
 
+export  const WalkingView : React.FC = ({navigation}) => {
 
-export  const WalkingView : React.FC<_WalkingView> = ({stopWalking} : _WalkingView) => {
-
-    let [coordinates, setCoordinates] = useState<Latlng[]>([]);
+    const [coordinates, setCoordinates] = useState<Latlng[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
 
     const setCoordinatesFunc = (long: number, lat : number) => {
@@ -55,7 +54,8 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking} : _WalkingVi
             let data = createData();
             createFile(data, routeName);
         }
-        stopWalking();
+        // stopWalking();
+        navigation.navigate('Home')
     }
     const getGeoData = () => {
         GetLocation.getCurrentPosition({
@@ -70,6 +70,9 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking} : _WalkingVi
                 const { code, message } = error;
                 console.warn(code, message);
                 getGeoData();
+                // тут еще можно каунтер завести, в случае успеха геозапроса сбрасывать
+                // а в случае n-ного количества ошибок подряд выводить инфу пользователю,
+                // что есть проблемы с получением данных
             })
     }
     useEffect(() => {
@@ -86,13 +89,14 @@ export  const WalkingView : React.FC<_WalkingView> = ({stopWalking} : _WalkingVi
         <View style={styles.walkingView}>
             <Map region={region} coordinates={coordinates} />
             <View style={styles.button}>
-                <Button title="Пришли" clickCallback={() => setModalVisible(true)} />
+                <Button title="Сохранить" clickCallback={() => setModalVisible(true)} />
             </View>
             <SaveRouteModal 
                 createFunc={(value) => stopWalkingFunc(true, value)} 
                 cancelFunc={() => stopWalkingFunc(false)}
                 continueFunc={() => setModalVisible(false)}
-                modalVisible={modalVisible}/>
+                modalVisible={modalVisible}
+            />
         </View>
     );
 };

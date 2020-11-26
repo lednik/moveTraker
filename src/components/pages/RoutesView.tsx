@@ -4,7 +4,7 @@ import {fs, dirPath} from '../../params/path'
 import {RoutesType} from '../../types/types'
 import {Button} from '../Button'
 
-export  const RoutesView : React.FC<RoutesType> = ({toStartView, showRoute} : RoutesType) => {
+export  const RoutesView : React.FC = ({navigation}) => {
 
     let [routes, setRoutes] = useState<string[]>()
     const getRoutes = () => {
@@ -24,7 +24,7 @@ export  const RoutesView : React.FC<RoutesType> = ({toStartView, showRoute} : Ro
 
     const renderItem = ({ item }) => (
         <View style={styles.button}>
-            <Button title={item.replace('.json', '')} clickCallback={() => showRoute(item)} key={item} />
+            <Button title={item.replace('.json', '')} clickCallback={() => navigation.navigate({name : 'RouteView', params: {routeName : item}})} key={item} />
             <Pressable onPress={() => {deleteRoute(item)}} style={styles.delete}>
                 <Image
                     style={styles.deleteImage}
@@ -51,7 +51,7 @@ export  const RoutesView : React.FC<RoutesType> = ({toStartView, showRoute} : Ro
             )}
             
             <View style={styles.bottom}>
-                <Button title="На главную" clickCallback={toStartView} />
+                <Button title="На главную" clickCallback={() => navigation.navigate('Home')} />
             </View>
         </View>
     );

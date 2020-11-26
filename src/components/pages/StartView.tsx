@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import {_StartView} from '../../types/types'
+// import {_StartView} from '../../types/types'
 import {Button} from '../Button'
 
-export  const StartView : React.FC<_StartView> = ({startWalking, showRoutes} : _StartView) => {
+export  const StartView : React.FC = ({navigation}) => {
     const styles = StyleSheet.create({
         startView: {
             flex: 1,
@@ -18,9 +18,9 @@ export  const StartView : React.FC<_StartView> = ({startWalking, showRoutes} : _
     return (
         <View style={styles.startView}>
             <Text style={styles.text}>Прогуляемся?</Text>
-            <Button title="Погнали" clickCallback={startWalking} />
-            <Text style={styles.text}>Прогулки</Text>
-            <Button title="Список" clickCallback={showRoutes} />
+            <Button title="Погнали" clickCallback={ () => navigation.navigate('WalkingView')} />
+            <Text style={styles.text}>Прогулки</Text> 
+            <Button title="Список" clickCallback={() => navigation.navigate('RoutesView')} />
         </View>
     );
     

@@ -5,10 +5,10 @@ import {Button} from '../Button'
 import {Map} from '../Map'
 import {fs, dirPath} from '../../params/path'
 
-export  const RouteView : React.FC<_RouteView> = ({route, toStartView} : _RouteView) => {
+export  const RouteView : React.FC = ({route, navigation }) => {
     let [routeData, setRoute] = useState<data>()
     useEffect(() => {
-        let filePath = dirPath + '/' + route
+        let filePath = dirPath + '/' + route.params.routeName;
         fs.readFile(filePath, 'utf8')
             .then((data) => {
                 setRoute(JSON.parse(data));
@@ -23,7 +23,7 @@ export  const RouteView : React.FC<_RouteView> = ({route, toStartView} : _RouteV
                 <ActivityIndicator size="large" color="#733651" />
             )}
             <View style={styles.button}>
-                <Button title="Назад" clickCallback={toStartView} />
+                <Button title="Назад" clickCallback={() => navigation.navigate('Home')} />
             </View>
         </View>
     );
