@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import MapView, { Polyline, Marker} from 'react-native-maps';
 import {MapType, _Marker, Latlng} from '../types/types'
 
-export  const Map : React.FC<MapType> = ({region, coordinates}) => {
+export  const Map : React.FC<MapType> = ({region, coordinates} : MapType) => {
     const [markers, setMarkers] = useState<_Marker[]>([])
     
     const createMarker = (coordinate : Latlng, title : string , description: string) => {

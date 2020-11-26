@@ -1,26 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View,  FlatList, SafeAreaView, ActivityIndicator, Pressable, Image} from 'react-native';
-import RNFetchBlob from 'rn-fetch-blob'
-import {data, RoutesType} from '../types/types'
+import {fs, dirPath} from '../params/path'
+import {RoutesType} from '../types/types'
 import {Button} from './Button'
 
-const fs = RNFetchBlob.fs
-
-export  const RoutesView : React.FC<RoutesType> = ({toStartView, showRoute}) => {
+export  const RoutesView : React.FC<RoutesType> = ({toStartView, showRoute} : RoutesType) => {
 
     let [routes, setRoutes] = useState<string[]>()
     const getRoutes = () => {
-        const dirs = RNFetchBlob.fs.dirs 
-        let dirPath = dirs.CacheDir + '/routes' //ПУТЬ ДО ПАПКИ С ФАЙЛАМИ
-        RNFetchBlob.fs.ls(dirPath)
+        fs.ls(dirPath)
             .then((files) => {
                 setRoutes(files)
             })
     }
     const deleteRoute = (route : string) => {
-        const dirs = RNFetchBlob.fs.dirs 
+        const dirs = fs.dirs 
         let dirPath = dirs.CacheDir + '/routes/' + route //ПУТЬ ДО Файла
-        RNFetchBlob.fs.unlink(dirPath)
+        fs.unlink(dirPath)
             .then(() => {
                 getRoutes();
             })

@@ -1,22 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text, ActivityIndicator} from 'react-native';
-import RNFetchBlob from 'rn-fetch-blob'
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import {data, _RouteView} from '../types/types'
 import {Button} from './Button'
 import {Map} from './Map'
+import {fs, dirPath} from '../params/path'
 
-export  const RouteView : React.FC<_RouteView> = ({route, toStartView}) => {
+export  const RouteView : React.FC<_RouteView> = ({route, toStartView} : _RouteView) => {
     let [routeData, setRoute] = useState<data>()
     useEffect(() => {
-        // console.log('routeData from route', routeData);
-        // ПУТИ
-        let dirs = RNFetchBlob.fs.dirs 
-        let dirPath = dirs.CacheDir + '/routes' //ПУТЬ ДО ПАПКИ С ФАЙЛАМИ
         let filePath = dirPath + '/' + route
-        RNFetchBlob.fs.readFile(filePath, 'utf8')
+        fs.readFile(filePath, 'utf8')
             .then((data) => {
-                console.log('not parse', data);
-                console.log('parse', JSON.parse(data).date);
                 setRoute(JSON.parse(data));
             })
     }, []);
@@ -35,7 +29,7 @@ export  const RouteView : React.FC<_RouteView> = ({route, toStartView}) => {
     );
     
 };
-const fs = RNFetchBlob.fs
+
 const styles = StyleSheet.create({
     routeView: {
         flex: 1,
