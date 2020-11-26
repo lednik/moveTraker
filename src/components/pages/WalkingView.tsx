@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import {View, StyleSheet} from 'react-native';
 import GetLocation from 'react-native-get-location'
 import { useNavigation } from '@react-navigation/native';
@@ -8,7 +8,7 @@ import {Button} from '../Button'
 import {Map} from '../Map'
 import {SaveRouteModal} from '../SaveRouteModal'
 
-export  const WalkingView : React.FC = () => {
+export  const WalkingView : React.FC = memo(() => {
     const navigation = useNavigation();
     const [coordinates, setCoordinates] = useState<Latlng[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
@@ -100,7 +100,7 @@ export  const WalkingView : React.FC = () => {
             />
         </View>
     );
-};
+});
 const styles = StyleSheet.create({
     walkingView: {
         flex: 1

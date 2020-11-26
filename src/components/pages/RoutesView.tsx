@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import {StyleSheet, View,  FlatList, SafeAreaView, ActivityIndicator, Pressable, Image} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {fs, dirPath} from '../../params/path'
 import {Button} from '../Button'
 
-export  const RoutesView : React.FC = () => {
+export  const RoutesView : React.FC = memo(() => {
     const navigation = useNavigation();
     let [routes, setRoutes] = useState<string[]>()
     const getRoutes = () => {
@@ -55,7 +55,7 @@ export  const RoutesView : React.FC = () => {
             </View>
         </View>
     );
-};
+});
 
 const styles = StyleSheet.create({
     routes: {

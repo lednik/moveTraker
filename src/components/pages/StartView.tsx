@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {Button} from '../Button'
 
-export  const StartView : React.FC = () => {
+export  const StartView : React.FC = memo(() => {
     const navigation = useNavigation();
     const styles = StyleSheet.create({
         startView: {
@@ -25,4 +25,4 @@ export  const StartView : React.FC = () => {
         </View>
     );
     
-};
+});
