@@ -10,7 +10,7 @@ type SaveRouteModal = {
 }
 
 export  const SaveRouteModal : React.FC<SaveRouteModal> = ({createFunc, cancelFunc, modalVisible, continueFunc} : SaveRouteModal) => {
-    const [value, onChangeText] = React.useState('Введите название маршрута');
+    const [value, onChangeText] = React.useState('');
     const [disabled, setDisabled] = React.useState(false);
 
     useEffect(() => {
