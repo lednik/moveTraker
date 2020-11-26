@@ -1,8 +1,10 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import {Button} from '../Button'
 
-export  const StartView : React.FC = ({navigation}) => {
+export  const StartView : React.FC = () => {
+    const navigation = useNavigation();
     const styles = StyleSheet.create({
         startView: {
             flex: 1,

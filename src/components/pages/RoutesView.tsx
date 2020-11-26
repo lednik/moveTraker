@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View,  FlatList, SafeAreaView, ActivityIndicator, Pressable, Image} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import {fs, dirPath} from '../../params/path'
 import {Button} from '../Button'
 
-export  const RoutesView : React.FC = ({navigation}) => {
-
+export  const RoutesView : React.FC = () => {
+    const navigation = useNavigation();
     let [routes, setRoutes] = useState<string[]>()
     const getRoutes = () => {
         fs.ls(dirPath)
