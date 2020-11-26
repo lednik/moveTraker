@@ -55,7 +55,6 @@ export  const WalkingView : React.FC = memo(() => {
             let data = createData();
             createFile(data, routeName);
         }
-        // stopWalking();
         navigation.navigate('Home')
     }
     const getGeoData = () => {

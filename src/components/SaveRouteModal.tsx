@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet, Modal, TextInput} from 'react-native';
 import {Button} from '../components/Button'
+import { colors } from '../params/colors';
 
 type SaveRouteModal = {
     createFunc(name : string): void,
@@ -82,7 +83,7 @@ export  const SaveRouteModal : React.FC<SaveRouteModal> = ({createFunc, cancelFu
     input: {
         height: 40,
         minWidth: 120,
-        borderColor: '#733651',
+        borderColor: colors.primary,
         borderBottomWidth: 1 ,
         marginBottom: 16
     }

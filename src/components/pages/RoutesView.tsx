@@ -3,6 +3,7 @@ import {StyleSheet, View,  FlatList, SafeAreaView, ActivityIndicator, Pressable,
 import { useNavigation } from '@react-navigation/native';
 import {fs, dirPath} from '../../params/path'
 import {Button} from '../Button'
+import { colors } from '../../params/colors';
 
 export  const RoutesView : React.FC = memo(() => {
     const navigation = useNavigation();
@@ -22,7 +23,7 @@ export  const RoutesView : React.FC = memo(() => {
             })
     }
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({ item } : {item : string}) => (
         <View style={styles.button}>
             <Button title={item.replace('.json', '')} clickCallback={() => navigation.navigate({name : 'RouteView', params: {routeName : item}})} key={item} />
             <Pressable onPress={() => {deleteRoute(item)}} style={styles.delete}>
@@ -47,7 +48,7 @@ export  const RoutesView : React.FC = memo(() => {
                     />
                 </SafeAreaView>
             ) : (
-                <ActivityIndicator size="large" color="#733651" />
+                <ActivityIndicator size="large" color={colors.primary} />
             )}
             
             <View style={styles.bottom}>
