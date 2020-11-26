@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View,  FlatList, SafeAreaView, ActivityIndicator, Pressable, Image} from 'react-native';
 import {fs, dirPath} from '../../params/path'
-import {RoutesType} from '../../types/types'
 import {Button} from '../Button'
 
 export  const RoutesView : React.FC = ({navigation}) => {

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
-import {data, _RouteView} from '../../types/types'
+import {data} from '../../types/types'
 import {Button} from '../Button'
 import {Map} from '../Map'
 import {fs, dirPath} from '../../params/path'

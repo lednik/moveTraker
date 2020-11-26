@@ -1,6 +1,5 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-// import {_StartView} from '../../types/types'
 import {Button} from '../Button'
 
 export  const StartView : React.FC = ({navigation}) => {
